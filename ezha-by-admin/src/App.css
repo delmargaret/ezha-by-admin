@@ -1,0 +1,218 @@
+#logo-img {
+  text-align: center;
+  margin-left: calc(50% - 60px);
+  margin-right: auto;
+}
+
+.App {
+  min-height: 100vh;
+  position: relative;
+  font-size: 20px;
+}
+
+.leaves-left {
+  border-width: 0px;
+  position: absolute;
+  left: 0px;
+  top: 20px;
+  width: 245px;
+  height: 545px;
+}
+
+.leaves-right {
+  border-width: 0px;
+  position: absolute;
+  right: 0px;
+  top: 20px;
+  width: 245px;
+  height: 545px;
+  transform: rotate(180deg);
+}
+
+#main-row {
+  margin: 0;
+  margin-bottom: 60px;
+  min-height: 600px;
+}
+
+.App .footer {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.App .btn-red {
+  color: black;
+  background-color: rgba(235, 95, 95, 0.6);
+  border-color: rgba(235, 95, 95, 0.6);
+  font-size: 20px;
+}
+
+.App .btn-red:hover {
+  color: black;
+  background-color: rgb(235, 95, 95);
+  border-color: rgb(235, 95, 95);
+}
+
+.App .btn-red:active {
+  color: black !important;
+  background-color: rgb(235, 95, 95) !important;
+  border-color: rgb(235, 95, 95) !important;
+}
+
+.App .btn-red:focus {
+  color: black;
+  background-color: rgb(235, 95, 95);
+  border-color: rgb(235, 95, 95);
+  box-shadow: 0 0 0 0.2rem rgba(235, 95, 95, 0.25);
+}
+
+.App .btn-red:active:focus {
+  box-shadow: 0 0 0 0.2rem rgba(235, 95, 95, 0.25) !important;
+}
+
+.modal .btn-red {
+  color: black;
+  background-color: rgba(235, 95, 95, 0.6);
+  border-color: rgba(235, 95, 95, 0.6);
+}
+
+.modal .btn-red:hover {
+  color: black;
+  background-color: rgb(235, 95, 95);
+  border-color: rgb(235, 95, 95);
+}
+
+.modal .btn-red:active {
+  color: black !important;
+  background-color: rgb(235, 95, 95) !important;
+  border-color: rgb(235, 95, 95) !important;
+}
+
+.modal .btn-red:focus {
+  color: black;
+  background-color: rgb(235, 95, 95);
+  border-color: rgb(235, 95, 95);
+  box-shadow: 0 0 0 0.2rem rgba(235, 95, 95, 0.25);
+}
+
+.modal .btn-red:active:focus {
+  box-shadow: 0 0 0 0.2rem rgba(235, 95, 95, 0.25) !important;
+}
+
+.App input:focus {
+  border-color: rgb(235, 95, 95);
+  box-shadow: 0 0 0 0.2rem rgba(235, 95, 95, 0.25);
+}
+
+.modal input:focus {
+  border-color: rgb(235, 95, 95);
+  box-shadow: 0 0 0 0.2rem rgba(235, 95, 95, 0.25);
+}
+
+.App select:focus {
+  border-color: rgb(235, 95, 95);
+  box-shadow: 0 0 0 0.2rem rgba(235, 95, 95, 0.25);
+}
+
+.App .table-hover tbody tr:hover {
+  color: #212529;
+  background-color: rgba(235, 95, 95, 0.075);
+}
+
+.App .app-link {
+  color: rgb(235, 85, 85);
+}
+
+.App .app-link:hover {
+  color: rgb(235, 10, 10);
+  text-decoration: underline !important;
+}
+
+.App .app-link:focus {
+  color: rgb(235, 10, 10);
+  text-decoration: underline !important;
+}
+
+.App .app-switch .custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  background-color: rgba(235, 95, 95, 0.6);
+  border-color: rgba(235, 95, 95, 0.6);
+}
+
+.form-label {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.form-control {
+  font-size: 20px !important;
+}
+
+.close {
+  cursor: pointer;
+  line-height: 0.2 !important;
+}
+
+.close:hover {
+  color: rgb(235, 95, 95) !important;
+}
+
+.modal .close {
+  line-height: normal !important;
+}
+
+.modal .close:focus {
+  outline-style: none !important;
+}
+
+.app-form .btn-red {
+  width: 100%;
+}
+
+.app-form textarea {
+  height: 10em !important;
+}
+
+.app-form textarea:active {
+  border-color: rgb(235, 95, 95);
+  box-shadow: 0 0 0 0.2rem rgba(235, 95, 95, 0.25);
+}
+
+.app-form textarea:focus {
+  border-color: rgb(235, 95, 95);
+  box-shadow: 0 0 0 0.2rem rgba(235, 95, 95, 0.25);
+}
+
+.accept:active {
+  background-color: rgba(40, 167, 69, 0.2) !important;
+}
+
+.accept:hover {
+  background-color: rgba(40, 167, 69, 0.2) !important;
+}
+
+.reject:active {
+  background-color: rgba(220, 53, 69, 0.2) !important;
+}
+
+.reject:hover {
+  background-color: rgba(220, 53, 69, 0.2) !important;
+}
+
+.back-btn:hover {
+  cursor: pointer;
+}
+
+.preview:hover {
+  background-color: rgba(235, 95, 95, 0.075);
+}
+
+.img-background {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+}

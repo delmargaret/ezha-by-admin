@@ -1,0 +1,7 @@
+#app-nav-tabs .nav-link{
+  color: black;
+}
+
+#app-nav-tabs .nav-link.active{
+  color:rgb(235, 85, 85);
+}
