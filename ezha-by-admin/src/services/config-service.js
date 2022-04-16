@@ -1,7 +1,7 @@
-const apiBaseUri = 'https://localhost:44327/';
+const apiBaseUri = "https://ezha-by-app.herokuapp.com/";
 
 export default class ConfigService {
-    static addBaseAddress(endpoint) {
-        return apiBaseUri + endpoint;
-    }
+  static addBaseAddress(endpoint) {
+    return apiBaseUri + endpoint;
+  }
 }
