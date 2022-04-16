@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Button, Form, Col, Row } from 'react-bootstrap';
-import TagsService from '../../services/tags-service';
+import React, { Component } from "react";
+import { Button, Form, Col, Row } from "react-bootstrap";
+import TagsService from "../../services/tags-service";
 
 export default class AddTagForm extends Component {
   constructor(props) {
@@ -41,6 +41,7 @@ export default class AddTagForm extends Component {
                 <Form.Control
                   ref={this.tagNameInput}
                   type="text"
+                  maxLength={20}
                   placeholder="Название тэга"
                   required
                 />

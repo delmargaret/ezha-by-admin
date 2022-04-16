@@ -98,9 +98,11 @@ export default class CateringFacilitiesList extends Component {
         sort: true,
         formatter: (cellContent, row) => {
           return (
-            <LinkContainer to={`/catering-facilities/edit/${row.id}`}>
-              <Nav.Link className="app-link">{cellContent}</Nav.Link>
-            </LinkContainer>
+            <div style={{ wordBreak: "break-word" }}>
+              <LinkContainer to={`/catering-facilities/edit/${row.id}`}>
+                <Nav.Link className="app-link">{cellContent}</Nav.Link>
+              </LinkContainer>
+            </div>
           );
         },
       },

@@ -6,7 +6,7 @@ export default class AddCategoryForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      validated: false
+      validated: false,
     };
 
     this.categoryNameInput = React.createRef();
@@ -26,7 +26,7 @@ export default class AddCategoryForm extends Component {
     }
 
     this.setState({
-      validated: true
+      validated: true,
     });
   }
 
@@ -45,6 +45,7 @@ export default class AddCategoryForm extends Component {
                   type="text"
                   placeholder="Название категории"
                   required
+                  maxLength={15}
                 />
                 <Form.Control.Feedback type="invalid">
                   Введите название категории

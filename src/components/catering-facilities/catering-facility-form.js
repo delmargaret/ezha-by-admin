@@ -105,7 +105,12 @@ export default class CateringFacilityForm extends Component {
         <Row>
           <Form.Group as={Col} controlId="nameValidationGroup">
             <Form.Label>Название заведения</Form.Label>
-            <Form.Control ref={this.nameInput} type="text" required />
+            <Form.Control
+              ref={this.nameInput}
+              type="text"
+              required
+              maxLength={30}
+            />
             <Form.Control.Feedback type="invalid">
               Введите название заведения
             </Form.Control.Feedback>
@@ -117,7 +122,12 @@ export default class CateringFacilityForm extends Component {
           </Col>
           <Form.Group as={Col} controlId="workingHoursValidationGroup">
             <Form.Label>Время работы</Form.Label>
-            <Form.Control ref={this.workingHoursInput} type="text" required />
+            <Form.Control
+              ref={this.workingHoursInput}
+              type="text"
+              required
+              maxLength={15}
+            />
             <Form.Control.Feedback type="invalid">
               Введите время работы
             </Form.Control.Feedback>
@@ -139,7 +149,12 @@ export default class CateringFacilityForm extends Component {
           </Form.Group>
           <Form.Group as={Col} controlId="deliveryTimeValidationGroup">
             <Form.Label>Время доставки</Form.Label>
-            <Form.Control ref={this.deliveryTimeInput} type="text" required />
+            <Form.Control
+              ref={this.deliveryTimeInput}
+              type="text"
+              required
+              maxLength={15}
+            />
             <Form.Control.Feedback type="invalid">
               Введите время доставки
             </Form.Control.Feedback>
@@ -178,7 +193,7 @@ export default class CateringFacilityForm extends Component {
                 {this.renderTagsOptions()}
               </Form.Control>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <Button onClick={this.onTagAdd} className="btn-red">
                 Добавить
               </Button>
