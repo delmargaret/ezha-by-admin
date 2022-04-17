@@ -34,7 +34,7 @@ export default class AddTagForm extends Component {
       <React.Fragment>
         <br />
         <Form noValidate validated={validated} onSubmit={this.onTagAdd}>
-          <Form.Label>Новый тэг</Form.Label>
+          <Form.Label id="tag-label">Новый тэг</Form.Label>
           <Row>
             <Col sm="4">
               <Form.Group controlId="tagName">

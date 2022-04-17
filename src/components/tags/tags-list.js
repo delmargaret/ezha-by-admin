@@ -45,7 +45,7 @@ export default class TagsList extends Component {
       {
         dataField: "id",
         text: "ID",
-        hidden: true
+        hidden: true,
       },
       {
         dataField: "tagName",
@@ -57,11 +57,11 @@ export default class TagsList extends Component {
           if (newValue.length === 0) {
             return {
               valid: false,
-              message: "Введите название"
+              message: "Введите название",
             };
           }
           return true;
-        }
+        },
       },
       {
         dataField: "remove",
@@ -70,8 +70,8 @@ export default class TagsList extends Component {
         formatter: (cellContent, row) => {
           return this.renderRemoveButton(row);
         },
-        editable: false
-      }
+        editable: false,
+      },
     ];
 
     return (
@@ -81,17 +81,14 @@ export default class TagsList extends Component {
         columns={columns}
         search
       >
-        {props => (
+        {(props) => (
           <React.Fragment>
             <hr />
             <br />
             <Row>
               <Col xs="4">
                 {" "}
-                <SearchBar
-                  {...props.searchProps}
-                  placeholder="Поиск"
-                />
+                <SearchBar {...props.searchProps} placeholder="Поиск" />
               </Col>
             </Row>
             <BootstrapTable
@@ -101,7 +98,7 @@ export default class TagsList extends Component {
               cellEdit={cellEditFactory({
                 mode: "dbclick",
                 afterSaveCell: this.onAfterSaveTag,
-                autoSelectText: true
+                autoSelectText: true,
               })}
               noDataIndication="Тэги не найдены"
             />
