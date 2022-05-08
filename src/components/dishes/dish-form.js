@@ -25,7 +25,12 @@ export default class DishForm extends Component {
         <Row>
           <Form.Group as={Col} controlId="nameValidationGroup">
             <Form.Label>Название блюда</Form.Label>
-            <Form.Control ref={this.nameInput} type="text" required />
+            <Form.Control
+              ref={this.nameInput}
+              type="text"
+              required
+              maxLength={30}
+            />
             <Form.Control.Feedback type="invalid">
               Введите название блюда
             </Form.Control.Feedback>
