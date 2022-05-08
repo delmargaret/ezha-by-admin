@@ -12,15 +12,19 @@ export default class TagsPage extends Component {
     super(props);
     this.state = {
       tags: [],
+      isLoading: false,
     };
 
     this.getTags = this.getTags.bind(this);
   }
 
   async getTags() {
+    document.getElementById("loader-div").classList.remove("disabled");
+    this.setState({ isLoading: true });
     const tags = await TagsService.getTags();
 
-    this.setState({ tags: tags ? tags.data : [] });
+    this.setState({ tags: tags ? tags.data : [], isLoading: false });
+    document.getElementById("loader-div").classList.add("disabled");
   }
 
   componentDidMount() {
@@ -32,9 +36,21 @@ export default class TagsPage extends Component {
     Emitter.off(TAG_LIST_UPDATED);
   }
 
+  showLoader() {
+    if (this.state.isLoading) {
+      return (
+        <div className="main-spinner spinner-border text-danger" role="status">
+          <span className="visually-hidden"></span>
+        </div>
+      );
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
+        {this.showLoader()}
+
         <AddTagForm />
         <div id="tags-list">
           <TagsList tags={this.state.tags} />

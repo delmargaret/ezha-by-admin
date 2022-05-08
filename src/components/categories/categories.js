@@ -6,7 +6,7 @@ import AddCategoryForm from "./add-category";
 import CategoriesList from "./categories-list";
 import Emitter from "../../services/event-emitter";
 import CategoriesService, {
-  CATEGORIES_LIST_UPDATED
+  CATEGORIES_LIST_UPDATED,
 } from "../../services/categories-service";
 
 export default class CategoriesPage extends Component {
@@ -15,7 +15,8 @@ export default class CategoriesPage extends Component {
     this.state = {
       cateringFacilities: [],
       categories: [],
-      cateringFacilityId: "-1"
+      cateringFacilityId: "-1",
+      isLoading: false,
     };
 
     this.getCateringFacilities = this.getCateringFacilities.bind(this);
@@ -24,27 +25,40 @@ export default class CategoriesPage extends Component {
   }
 
   async getCateringFacilities() {
-    const cateringFacilitiesList = await CateringFacilitiesService.getCateringFacilities();
+    document.getElementById("loader-div").classList.remove("disabled");
+    this.setState({ isLoading: true });
+    const cateringFacilitiesList =
+      await CateringFacilitiesService.getCateringFacilities();
 
     this.setState({
-      cateringFacilities: cateringFacilitiesList ? cateringFacilitiesList.data.map(res => {
-        return { id: res.id, name: res.cateringFacilityName };
-      }) : []
+      cateringFacilities: cateringFacilitiesList
+        ? cateringFacilitiesList.data.map((res) => {
+            return { id: res.id, name: res.cateringFacilityName };
+          })
+        : [],
+      isLoading: false,
     });
+    document.getElementById("loader-div").classList.add("disabled");
   }
 
   async getCategories(id) {
     if (id && id !== "-1") {
+      document.getElementById("loader-div").classList.remove("disabled");
+      this.setState({ isLoading: true });
       const categoriesData = await CategoriesService.getCategories(id);
 
-      this.setState({ categories: categoriesData ? categoriesData.data : [] });
+      this.setState({
+        categories: categoriesData ? categoriesData.data : [],
+        isLoading: false,
+      });
+      document.getElementById("loader-div").classList.add("disabled");
     }
   }
 
   componentDidMount() {
     this.getCateringFacilities();
     this.getCategories(this.state.cateringFacilityId);
-    Emitter.on(CATEGORIES_LIST_UPDATED, _ =>
+    Emitter.on(CATEGORIES_LIST_UPDATED, (_) =>
       this.getCategories(this.state.cateringFacilityId)
     );
   }
@@ -54,7 +68,7 @@ export default class CategoriesPage extends Component {
   }
 
   renderCateringFacilityOptions() {
-    return this.state.cateringFacilities.map(it => (
+    return this.state.cateringFacilities.map((it) => (
       <option key={it.id} value={it.id}>
         {it.name}
       </option>
@@ -86,9 +100,20 @@ export default class CategoriesPage extends Component {
     this.getCategories(event.target.value);
   }
 
+  showLoader() {
+    if (this.state.isLoading) {
+      return (
+        <div className="main-spinner spinner-border text-danger" role="status">
+          <span className="visually-hidden"></span>
+        </div>
+      );
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
+        {this.showLoader()}
         <br />
         <Form.Group>
           <Form.Label>Заведение</Form.Label>

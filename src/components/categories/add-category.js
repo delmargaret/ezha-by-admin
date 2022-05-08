@@ -45,7 +45,7 @@ export default class AddCategoryForm extends Component {
                   type="text"
                   placeholder="Название категории"
                   required
-                  maxLength={15}
+                  maxLength={20}
                 />
                 <Form.Control.Feedback type="invalid">
                   Введите название категории

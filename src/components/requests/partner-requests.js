@@ -35,12 +35,12 @@ export default class PartnerRequestsPage extends Component {
       currentPartner: {},
       currentStatus: null,
       cateringFacilities: [],
+      isLoading: false,
     };
 
     this.getPartnerRequests = this.getPartnerRequests.bind(this);
-    this.renderPartnerAccountButton = this.renderPartnerAccountButton.bind(
-      this
-    );
+    this.renderPartnerAccountButton =
+      this.renderPartnerAccountButton.bind(this);
     this.getCateringFacilities = this.getCateringFacilities.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
     this.sendEmail = this.sendEmail.bind(this);
@@ -57,19 +57,30 @@ export default class PartnerRequestsPage extends Component {
   }
 
   async getPartnerRequests() {
+    document.getElementById("loader-div").classList.remove("disabled");
+    this.setState({ isLoading: true });
     const requestList = await RequestsService.getPartnerRequests();
 
-    this.setState({ requests: requestList ? requestList.data : [] });
+    this.setState({
+      requests: requestList ? requestList.data : [],
+      isLoading: false,
+    });
+    document.getElementById("loader-div").classList.add("disabled");
   }
 
   async getCateringFacilities() {
-    const cateringFacilitiesList = await CateringFacilitiesService.getCateringFacilities();
+    document.getElementById("loader-div").classList.remove("disabled");
+    this.setState({ isLoading: true });
+    const cateringFacilitiesList =
+      await CateringFacilitiesService.getCateringFacilities();
 
     this.setState({
       cateringFacilities: cateringFacilitiesList
         ? cateringFacilitiesList.data
         : [],
+      isLoading: false,
     });
+    document.getElementById("loader-div").classList.add("disabled");
   }
 
   renderPartnerAccountButton(partner) {
@@ -182,6 +193,16 @@ export default class PartnerRequestsPage extends Component {
     }
   }
 
+  showLoader() {
+    if (this.state.isLoading) {
+      return (
+        <div className="main-spinner spinner-border text-danger" role="status">
+          <span className="visually-hidden"></span>
+        </div>
+      );
+    }
+  }
+
   render() {
     const requestStatus =
       this.state.currentStatus === REQUEST_STATUSES.Accepted
@@ -247,6 +268,7 @@ export default class PartnerRequestsPage extends Component {
 
     return (
       <React.Fragment>
+        {this.showLoader()}
         <br />
         <br />
         <ToolkitProvider

@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Button, Form, Row, Col } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap';
+import React, { Component } from "react";
+import { Button, Form, Row, Col } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 
-import DishesService from '../../services/dishes-service';
-import DishForm from './dish-form';
-import CategoriesService from '../../services/categories-service';
-import arrowLeft from './../../arrow-left.png';
+import DishesService from "../../services/dishes-service";
+import DishForm from "./dish-form";
+import CategoriesService from "../../services/categories-service";
+import arrowLeft from "./../../arrow-left.png";
 
 export default class UpdateDish extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ export default class UpdateDish extends Component {
       categories: [],
       needRedirect: false,
       validated: false,
+      isLoading: false,
     };
 
     this.formResults = React.createRef();
@@ -22,6 +23,8 @@ export default class UpdateDish extends Component {
   }
 
   async componentDidMount() {
+    document.getElementById("loader-div").classList.remove("disabled");
+    this.setState({ isLoading: true });
     const { cateringFacilityId, id } = this.props.match.params;
 
     const categoriesList = await CategoriesService.getCategories(
@@ -36,19 +39,18 @@ export default class UpdateDish extends Component {
       validated: false,
     });
 
-    const {
-      nameInput,
-      descritionInput,
-      priceInput,
-      categoryInput,
-    } = this.formResults.current;
+    const { nameInput, descritionInput, priceInput, categoryInput } =
+      this.formResults.current;
 
     if (dishDetails) {
       nameInput.current.value = dishDetails.data.dishName;
       descritionInput.current.value = dishDetails.data.description;
       priceInput.current.value = dishDetails.data.price;
-      categoryInput.current.value = dishDetails.data.cateringFacilityCategory.id;
+      categoryInput.current.value =
+        dishDetails.data.cateringFacilityCategory.id;
     }
+    this.setState({ isLoading: false });
+    document.getElementById("loader-div").classList.add("disabled");
   }
 
   async onDishUpdate(event) {
@@ -63,12 +65,8 @@ export default class UpdateDish extends Component {
 
       const { id } = this.props.match.params;
 
-      const {
-        nameInput,
-        descritionInput,
-        priceInput,
-        categoryInput,
-      } = this.formResults.current;
+      const { nameInput, descritionInput, priceInput, categoryInput } =
+        this.formResults.current;
 
       const name = nameInput.current.value;
       const description = descritionInput.current.value;
@@ -84,6 +82,16 @@ export default class UpdateDish extends Component {
     });
   }
 
+  showLoader() {
+    if (this.state.isLoading) {
+      return (
+        <div className="main-spinner spinner-border text-danger" role="status">
+          <span className="visually-hidden"></span>
+        </div>
+      );
+    }
+  }
+
   render() {
     const { categories, needRedirect, validated } = this.state;
     const { cateringFacilityId } = this.props.match.params;
@@ -94,6 +102,7 @@ export default class UpdateDish extends Component {
 
     const formElement = (
       <React.Fragment>
+        {this.showLoader()}
         <br />
         <br />
         <LinkContainer to={dishesCateringFacilityPage} isActive={() => false}>

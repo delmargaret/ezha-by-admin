@@ -33,6 +33,7 @@ export default class FeedbacksPage extends Component {
       show: false,
       currentFeedback: {},
       currentStatus: null,
+      isLoading: false,
     };
 
     this.getFeedbacks = this.getFeedbacks.bind(this);
@@ -49,9 +50,15 @@ export default class FeedbacksPage extends Component {
   }
 
   async getFeedbacks() {
+    document.getElementById("loader-div").classList.remove("disabled");
+    this.setState({ isLoading: true });
     const feedbackList = await FeedbacksService.getFeedbacks();
 
-    this.setState({ feedbacks: feedbackList ? feedbackList.data : []});
+    this.setState({
+      feedbacks: feedbackList ? feedbackList.data : [],
+      isLoading: false,
+    });
+    document.getElementById("loader-div").classList.add("disabled");
   }
 
   setShow(show) {
@@ -124,6 +131,16 @@ export default class FeedbacksPage extends Component {
     }
   }
 
+  showLoader() {
+    if (this.state.isLoading) {
+      return (
+        <div className="main-spinner spinner-border text-danger" role="status">
+          <span className="visually-hidden"></span>
+        </div>
+      );
+    }
+  }
+
   render() {
     const feedback = this.state.currentFeedback;
     let type = FEEDBACK_CATEGORIES.find(
@@ -193,6 +210,7 @@ export default class FeedbacksPage extends Component {
 
     return (
       <React.Fragment>
+        {this.showLoader()}
         <br />
         <br />
         <ToolkitProvider

@@ -13,15 +13,25 @@ export default class CateringFacilitiesPage extends Component {
     super(props);
     this.state = {
       cateringFacilities: [],
+      isLoading: false,
     };
 
     this.getCateringFacilities = this.getCateringFacilities.bind(this);
   }
 
   async getCateringFacilities() {
-    const cateringFacilitiesList = await CateringFacilitiesService.getCateringFacilities();
+    document.getElementById("loader-div").classList.remove("disabled");
+    this.setState({ isLoading: true });
+    const cateringFacilitiesList =
+      await CateringFacilitiesService.getCateringFacilities();
 
-    this.setState({ cateringFacilities: cateringFacilitiesList ? cateringFacilitiesList.data : []});
+    this.setState({
+      cateringFacilities: cateringFacilitiesList
+        ? cateringFacilitiesList.data
+        : [],
+      isLoading: false,
+    });
+    document.getElementById("loader-div").classList.add("disabled");
   }
 
   componentDidMount() {
@@ -33,9 +43,20 @@ export default class CateringFacilitiesPage extends Component {
     Emitter.off(CF_LIST_UPDATED);
   }
 
+  showLoader() {
+    if (this.state.isLoading) {
+      return (
+        <div className="main-spinner spinner-border text-danger" role="status">
+          <span className="visually-hidden"></span>
+        </div>
+      );
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
+        {this.showLoader()}
         <br />
         <br />
         <LinkContainer to="/catering-facilities/new" isActive={() => false}>

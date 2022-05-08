@@ -33,12 +33,12 @@ export default class CourierRequestsPage extends Component {
       show: false,
       currentCourier: {},
       currentStatus: null,
+      isLoading: false,
     };
 
     this.getCourierRequests = this.getCourierRequests.bind(this);
-    this.renderCourierAccountButton = this.renderCourierAccountButton.bind(
-      this
-    );
+    this.renderCourierAccountButton =
+      this.renderCourierAccountButton.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
     this.sendEmail = this.sendEmail.bind(this);
     this.setShow = this.setShow.bind(this);
@@ -52,9 +52,15 @@ export default class CourierRequestsPage extends Component {
   }
 
   async getCourierRequests() {
+    document.getElementById("loader-div").classList.remove("disabled");
+    this.setState({ isLoading: true });
     const requestList = await RequestsService.getCourierRequests();
 
-    this.setState({ requests: requestList ? requestList.data : [] });
+    this.setState({
+      requests: requestList ? requestList.data : [],
+      isLoading: false,
+    });
+    document.getElementById("loader-div").classList.add("disabled");
   }
 
   renderCourierAccountButton(courier) {
@@ -155,6 +161,16 @@ export default class CourierRequestsPage extends Component {
     }
   }
 
+  showLoader() {
+    if (this.state.isLoading) {
+      return (
+        <div className="main-spinner spinner-border text-danger" role="status">
+          <span className="visually-hidden"></span>
+        </div>
+      );
+    }
+  }
+
   render() {
     const requestStatus =
       this.state.currentStatus === REQUEST_STATUSES.Accepted
@@ -221,6 +237,7 @@ export default class CourierRequestsPage extends Component {
 
     return (
       <React.Fragment>
+        {this.showLoader()}
         <br />
         <br />
         <ToolkitProvider

@@ -17,6 +17,7 @@ export default class UpdateCateringFacility extends Component {
       tags: [],
       needRedirect: false,
       validated: false,
+      isLoading: false,
     };
 
     this.editorForm = React.createRef();
@@ -24,6 +25,8 @@ export default class UpdateCateringFacility extends Component {
   }
 
   async componentDidMount() {
+    document.getElementById("loader-div").classList.remove("disabled");
+    this.setState({ isLoading: true });
     const { id } = this.props.match.params;
 
     const facility = await CateringFacilitiesService.getCateringFacility(id);
@@ -39,7 +42,7 @@ export default class UpdateCateringFacility extends Component {
         streetInput,
         houseInput,
       } = this.editorForm.current;
-  
+
       nameInput.current.value = facility.data.cateringFacilityName;
       deliveryTimeInput.current.value = facility.data.deliveryTime;
       deliveryPriceInput.current.value = facility.data.deliveryPrice;
@@ -48,15 +51,17 @@ export default class UpdateCateringFacility extends Component {
       townInput.current.town.current.value = facility.data.town;
       streetInput.current.value = facility.data.street;
       houseInput.current.value = facility.data.houseNumber;
-  
+
       const tags = await TagsService.getTags();
-  
+
       this.setState({
         cateringFacilityTags: [...facility.data.cateringFacilityTags],
         tags: tags ? [...tags.data] : [],
         needRedirect: false,
         validated: false,
+        isLoading: false,
       });
+      document.getElementById("loader-div").classList.add("disabled");
     }
   }
 
@@ -112,6 +117,16 @@ export default class UpdateCateringFacility extends Component {
     });
   }
 
+  showLoader() {
+    if (this.state.isLoading) {
+      return (
+        <div className="main-spinner spinner-border text-danger" role="status">
+          <span className="visually-hidden"></span>
+        </div>
+      );
+    }
+  }
+
   render() {
     const { cateringFacilityTags, tags, needRedirect, validated } = this.state;
 
@@ -121,6 +136,7 @@ export default class UpdateCateringFacility extends Component {
 
     const formElement = (
       <React.Fragment>
+        {this.showLoader()}
         <br />
         <br />
         <LinkContainer to="/catering-facilities" isActive={() => false}>

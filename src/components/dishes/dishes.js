@@ -24,40 +24,59 @@ export default class DishesPage extends Component {
       dishes: [],
       cateringFacilityId: cateringFacilityId ? cateringFacilityId : "-1",
       needRedirect: false,
+      isLoading: false,
     };
 
     this.getCateringFacilities = this.getCateringFacilities.bind(this);
     this.getCategories = this.getCategories.bind(this);
-    this.onCateringFacilitiesUpdate = this.onCateringFacilitiesUpdate.bind(
-      this
-    );
+    this.onCateringFacilitiesUpdate =
+      this.onCateringFacilitiesUpdate.bind(this);
   }
 
   async getCateringFacilities() {
-    const cateringFacilitiesList = await CateringFacilitiesService.getCateringFacilities();
+    document.getElementById("loader-div").classList.remove("disabled");
+    this.setState({ isLoading: true });
+    const cateringFacilitiesList =
+      await CateringFacilitiesService.getCateringFacilities();
 
     this.setState({
-      cateringFacilities: cateringFacilitiesList ? cateringFacilitiesList.data.map((res) => {
-        return { id: res.id, name: res.cateringFacilityName };
-      }) : []
+      cateringFacilities: cateringFacilitiesList
+        ? cateringFacilitiesList.data.map((res) => {
+            return { id: res.id, name: res.cateringFacilityName };
+          })
+        : [],
+      isLoading: false,
     });
+    document.getElementById("loader-div").classList.add("disabled");
   }
 
   async getCategories(cateringFacilityId) {
     if (cateringFacilityId && cateringFacilityId !== "-1") {
+      document.getElementById("loader-div").classList.remove("disabled");
+      this.setState({ isLoading: true });
       const categoriesData = await CategoriesService.getCategories(
         cateringFacilityId
       );
 
-      this.setState({ categories: categoriesData ? categoriesData.data : []});
+      this.setState({
+        categories: categoriesData ? categoriesData.data : [],
+        isLoading: false,
+      });
+      document.getElementById("loader-div").classList.add("disabled");
     }
   }
 
   async getDishes(cateringFacilityId) {
     if (cateringFacilityId && cateringFacilityId !== "-1") {
+      document.getElementById("loader-div").classList.remove("disabled");
+      this.setState({ isLoading: true });
       const dishesData = await DishesService.getDishes(cateringFacilityId);
 
-      this.setState({ dishes: dishesData ? dishesData.data : []});
+      this.setState({
+        dishes: dishesData ? dishesData.data : [],
+        isLoading: false,
+      });
+      document.getElementById("loader-div").classList.add("disabled");
     }
   }
 
@@ -126,6 +145,16 @@ export default class DishesPage extends Component {
     return <React.Fragment>Заведение не выбрано</React.Fragment>;
   }
 
+  showLoader() {
+    if (this.state.isLoading) {
+      return (
+        <div className="main-spinner spinner-border text-danger" role="status">
+          <span className="visually-hidden"></span>
+        </div>
+      );
+    }
+  }
+
   render() {
     const { cateringFacilityId, needRedirect } = this.state;
 
@@ -135,6 +164,7 @@ export default class DishesPage extends Component {
 
     const pageElement = (
       <React.Fragment>
+        {this.showLoader()}
         <br />
         <Form.Group>
           <Form.Label>Заведение</Form.Label>

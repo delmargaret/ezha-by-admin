@@ -171,6 +171,7 @@ export default class App extends Component {
 
     return (
       <div className="App">
+        <div id="loader-div" className="disabled"></div>
         {isAuthorized ? authenticatedElement : nonAuthenticatedElement}
       </div>
     );
