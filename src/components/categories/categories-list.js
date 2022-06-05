@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Button, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
-import BootstrapTable from "react-bootstrap-table-next";
-import cellEditFactory from "react-bootstrap-table2-editor";
-import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
-import CategoriesService from "../../services/categories-service";
+import React, { Component } from 'react';
+import { Button, OverlayTrigger, Tooltip, Row, Col } from 'react-bootstrap';
+import BootstrapTable from 'react-bootstrap-table-next';
+import cellEditFactory from 'react-bootstrap-table2-editor';
+import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import CategoriesService from '../../services/categories-service';
 
 const { SearchBar } = Search;
 
@@ -19,12 +19,7 @@ export default class CategoriesList extends Component {
   }
 
   onAfterSaveCategory(oldValue, newValue, row, column) {
-    CategoriesService.updateCategoryName(
-      this.props.cateringFacilityId,
-      row.categoryId,
-      newValue,
-      false
-    );
+    CategoriesService.updateCategoryName(this.props.cateringFacilityId, row.categoryId, newValue);
   }
 
   renderRemoveButton(category) {
@@ -32,25 +27,20 @@ export default class CategoriesList extends Component {
       <OverlayTrigger
         key="right"
         placement="right"
-        overlay={
-          <Tooltip id={`tooltip-right`}>Категория назначена блюду</Tooltip>
-        }
+        overlay={<Tooltip id={`tooltip-right`}>Категория назначена блюду</Tooltip>}
       >
         <span>
           <Button
             variant="outline-danger"
             disabled
-            style={{ pointerEvents: "none" }}
+            style={{ pointerEvents: 'none' }}
           >
             Удалить
           </Button>
         </span>
       </OverlayTrigger>
     ) : (
-      <Button
-        onClick={() => this.onDeleteCategory(category.categoryId)}
-        variant="outline-danger"
-      >
+      <Button onClick={() => this.onDeleteCategory(category.categoryId)} variant="outline-danger">
         Удалить
       </Button>
     );
@@ -59,35 +49,35 @@ export default class CategoriesList extends Component {
   render() {
     const columns = [
       {
-        dataField: "categoryId",
-        text: "ID",
-        hidden: true,
+        dataField: 'categoryId',
+        text: 'ID',
+        hidden: true
       },
       {
-        dataField: "categoryName",
-        text: "Категории",
-        align: "left",
-        headerAlign: "left",
+        dataField: 'categoryName',
+        text: 'Категории',
+        align: 'left',
+        headerAlign: 'left',
         sort: true,
         validator: (newValue, row, column) => {
           if (newValue.length === 0) {
             return {
               valid: false,
-              message: "Введите название",
+              message: 'Введите название'
             };
           }
           return true;
-        },
+        }
       },
       {
-        dataField: "remove",
+        dataField: 'remove',
         isDummyField: true,
-        text: "",
+        text: '',
         formatter: (cellContent, row) => {
           return this.renderRemoveButton(row);
         },
-        editable: false,
-      },
+        editable: false
+      }
     ];
 
     return (
@@ -97,14 +87,17 @@ export default class CategoriesList extends Component {
         columns={columns}
         search
       >
-        {(props) => (
+        {props => (
           <React.Fragment>
             <hr />
             <br />
             <Row>
               <Col xs="4">
                 {" "}
-                <SearchBar {...props.searchProps} placeholder="Поиск" />
+                <SearchBar
+                  {...props.searchProps}
+                  placeholder="Поиск"
+                />
               </Col>
             </Row>
             <BootstrapTable
@@ -112,9 +105,9 @@ export default class CategoriesList extends Component {
               bootstrap4
               hover={true}
               cellEdit={cellEditFactory({
-                mode: "dbclick",
+                mode: 'dbclick',
                 afterSaveCell: this.onAfterSaveCategory,
-                autoSelectText: true,
+                autoSelectText: true
               })}
               noDataIndication="Категории не найдены"
             />
