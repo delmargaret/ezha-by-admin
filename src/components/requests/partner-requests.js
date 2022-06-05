@@ -50,9 +50,10 @@ export default class PartnerRequestsPage extends Component {
     this.cateringFacility = React.createRef();
   }
 
-  componentDidMount() {
-    this.getPartnerRequests();
-    this.getCateringFacilities();
+  async componentDidMount() {
+    this.getCateringFacilities().then(
+      async () => await this.getPartnerRequests()
+    );
     Emitter.on(PARTNER_LIST_UPDATED, (_) => this.getPartnerRequests());
   }
 
